@@ -1,4 +1,5 @@
-module Models exposing (..)
+module Models exposing (Airline, Model, Msg(..), initialModel, matchingAirlines)
+
 
 type alias Airline =
     { name : String
@@ -21,9 +22,29 @@ type Msg
 initialModel : Model
 initialModel =
     { airlines =
-          [ {name = "My Jet Now Airlines", abbreviation = "MJN" },
-                {name = "SuperFast Planes", abbreviation = "SFP"}
-          ]
+        [ { name = "My Jet Now Airlines", abbreviation = "MJN" }
+        , { name = "SuperFast Planes", abbreviation = "SFP" }
+        ]
     , currentAirline = Nothing
     , searchText = ""
     }
+
+
+{-| All airlines containing the search box text in their name.
+Case-Insensitive
+-}
+matchingAirlines airlines query =
+    let
+        normalizedQuery =
+            String.toUpper query
+
+        containsQuery : String -> Bool
+        containsQuery =
+            String.contains normalizedQuery
+    in
+    airlines
+        |> List.filter
+            (\airline ->
+                containsQuery airline.abbreviation
+                    || containsQuery airline.name
+            )

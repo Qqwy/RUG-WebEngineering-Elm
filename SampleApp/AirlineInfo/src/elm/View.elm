@@ -10,7 +10,7 @@ view model =
     div [ class "airlines-app" ]
         [ div [ class "ui grid" ]
             [ div [ class "sixteen wide column" ]
-                [ h1 [class "ui center aligned header"] [ text "Fancy Airline Selection App" ]
+                [ h1 [ class "ui center aligned header" ] [ text "Fancy Airline Selection App" ]
                 ]
             , div [ class "row" ]
                 [ div [ class "three wide column" ] [ airlinesForm model ]
@@ -21,12 +21,6 @@ view model =
 
 
 airlinesForm model =
-    let
-        {--All airlines containing the search box text in their name-}
-        matchingAirlines =
-            model.airlines
-                |> List.filter (\airline -> String.contains model.searchText airline.name)
-    in
     div [ class "airlines-form" ]
         [ input
             [ placeholder "Filter Airline Name"
@@ -34,13 +28,22 @@ airlinesForm model =
             , onInput SearchTextChange
             ]
             []
-        , airlinesView matchingAirlines
+        , airlinesView (Models.matchingAirlines model.airlines model.searchText) model.currentAirline
         ]
 
 
-airlinesView : List Airline -> Html Msg
-airlinesView airlines =
-    ul [ class "airlines-list" ] (List.map airlineView airlines)
+airlinesView : List Airline -> Maybe Airline -> Html Msg
+airlinesView airlines currentAirline =
+    let
+        correctAirlineView =
+            if Just airline == currentAirline then
+                currentAirlineView airline
+
+            else
+                airlineView airline
+    in
+    ul [ class "airlines-list" ]
+        (List.map correctAirlineView airlines)
 
 
 airlineView : Airline -> Html Msg
@@ -48,17 +51,23 @@ airlineView airline =
     li [ onClick (SelectAirline airline) ] [ text (airline.abbreviation ++ ": " ++ airline.name) ]
 
 
+currentAirlineView : Airline -> Html Msg
+currentAirlineView airline =
+    li [ class "current" ] [ text (airline.abbreviation ++ ": " ++ airline.name) ]
+
+
 airlineDetailView maybeAirline =
     let
         content =
             case maybeAirline of
                 Nothing ->
-                    [div [class "empty"]
-                        [ text "Select an airline first" ]]
+                    [ div [ class "empty" ]
+                        [ text "Select an airline first" ]
+                    ]
 
                 Just airline ->
                     [ h1 [] [ text airline.name ]
                     , h2 [] [ text ("Abbreviation: " ++ airline.abbreviation) ]
                     ]
     in
-        div [ class "airline-detail" ] content
+    div [ class "airline-detail" ] content

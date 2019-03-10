@@ -21,8 +21,8 @@ $line-color: grey;
             cursor: pointer;
 
             transition: color $transition-speed;
-            &:hover {
-                color: aquamarine;
+            &.current, &:hover {
+                color: #00aaff;
             }
         }
     }
