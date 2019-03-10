@@ -1,0 +1,41 @@
+* Elm (and Sass)
+* Who am I?
+** Marten (Wiebe-Marten Wijnja) / Qqwy
+** 12+ years of professional webdev experience
+* Purpose
+** Sass (an aside)
+** Elm
+** Purpose: Showcasing these concepts
+* SASS
+** CSS Preprocessor
+** Why use?
+*** 
+* Elm
+** Hisotry
+** Basic Concepts
+*** Pure Functional Programming
+**** ML-style Static Typing
+***** Compiler enforces types
+***** Type inference
+***** Both Product- and Sum-types
+*** TEA
+**** Simple, dumbed-down version.
+** Example application (up/down counter) + Ellie.
+** Slightly more involved TEA (with Cmd + Subscriptions)
+*** Running Example: More involved application + loading things from a remote endpoint.
+    - Search box to type code of airport(?)
+    - Display statistics of this given airport.
+** Pros/Cons
+*** Pros
+**** There is a single, well-defined structure to building an application.
+**** Forgetting to handle edge cases (or making race conditions) is near-impossible.
+**** Very good to build maintainable applications.
+*** Cons
+**** Slightly higher initial learning-curve 
+***** (although documentation + compiler warnings are very good!)
+**** Currently v 0.19
+***** Stable, but v 0.20 will have some alterations.
+**** Interaction with other JS-code deliberately a hurdle.
+** When to use?
+*** Single Page Applications.
+*** Not recommended for 'sprinkles of interactivity'.
