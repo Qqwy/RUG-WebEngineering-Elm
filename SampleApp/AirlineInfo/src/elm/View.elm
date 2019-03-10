@@ -1,6 +1,6 @@
 module View exposing (view)
 
-import Html exposing (Html, div, h1, h2, input, li, text, ul)
+import Html exposing (Html, div, h1, h2, i, input, li, text, ul)
 import Html.Attributes exposing (class, placeholder)
 import Html.Events exposing (onClick, onInput)
 import Models exposing (Airline, Model, Msg(..))
@@ -22,12 +22,13 @@ view model =
 
 airlinesForm model =
     div [ class "airlines-form" ]
-        [ input
-            [ placeholder "Filter Airline Name"
-            , class "airline-search"
-            , onInput SearchTextChange
+        [ div [ class "airline-search ui fluid icon input" ]
+            [ input
+                [ placeholder "Filter Airline Name"
+                , onInput SearchTextChange
+                ]
+                []
             ]
-            []
         , airlinesView (Models.matchingAirlines model.airlines model.searchText) model.currentAirline
         ]
 
@@ -35,25 +36,25 @@ airlinesForm model =
 airlinesView : List Airline -> Maybe Airline -> Html Msg
 airlinesView airlines currentAirline =
     let
-        correctAirlineView =
+        correctAirlineView airline =
             if Just airline == currentAirline then
                 currentAirlineView airline
 
             else
                 airlineView airline
     in
-    ul [ class "airlines-list" ]
+    div [ class "airlines-list ui relaxed divided list" ]
         (List.map correctAirlineView airlines)
 
 
 airlineView : Airline -> Html Msg
 airlineView airline =
-    li [ onClick (SelectAirline airline) ] [ text (airline.abbreviation ++ ": " ++ airline.name) ]
+    div [ class "item", onClick (SelectAirline airline) ] [ text (airline.abbreviation ++ ": " ++ airline.name) ]
 
 
 currentAirlineView : Airline -> Html Msg
 currentAirlineView airline =
-    li [ class "current" ] [ text (airline.abbreviation ++ ": " ++ airline.name) ]
+    div [ class "current item" ] [ text (airline.abbreviation ++ ": " ++ airline.name) ]
 
 
 airlineDetailView maybeAirline =

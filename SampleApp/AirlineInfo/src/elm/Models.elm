@@ -24,6 +24,7 @@ initialModel =
     { airlines =
         [ { name = "My Jet Now Airlines", abbreviation = "MJN" }
         , { name = "SuperFast Planes", abbreviation = "SFP" }
+        , { name = "Airlines Anonymous", abbreviation = "AA" }
         ]
     , currentAirline = Nothing
     , searchText = ""
@@ -39,8 +40,8 @@ matchingAirlines airlines query =
             String.toUpper query
 
         containsQuery : String -> Bool
-        containsQuery =
-            String.contains normalizedQuery
+        containsQuery str =
+            String.contains normalizedQuery (String.toUpper str)
     in
     airlines
         |> List.filter
