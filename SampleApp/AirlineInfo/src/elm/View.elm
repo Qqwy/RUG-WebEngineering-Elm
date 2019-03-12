@@ -14,6 +14,7 @@ view model =
             [ div [ class "fifteen wide column" ]
                 [ h1 [ class "ui center aligned header" ] [ text "Fancy Airline Selection App" ]
                 ]
+            , div [class "row"] [errorLogView model.errorLog]
             , div [ class "row" ]
                 [ div [ class "three wide column" ] [ airlinesForm model ]
                 , div [ class "twelve wide column" ] [ airlineDetailView model.currentAirline ]
@@ -80,3 +81,17 @@ airlineDetailView maybeAirlineDetails =
                     ]
     in
     div [ class "airline-detail" ] content
+
+errorLogView errors =
+    if List.isEmpty errors then
+        text ""
+    else
+        let
+            errorsHtml =
+                errors
+                    |> List.map (\error -> li [] [text error])
+        in
+          div [class "ui error message"]
+              [ div [class "header"] [text "Errors encountered while communicating with the server"]
+              , ul [class "list"] errorsHtml
+              ]

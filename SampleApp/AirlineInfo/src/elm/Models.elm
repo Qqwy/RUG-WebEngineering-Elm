@@ -19,6 +19,7 @@ type alias Model =
     { airlines : List Airline
     , currentAirline : Maybe AirlineDetails
     , searchText : String
+    , errorLog : List String
     }
 
 
@@ -32,6 +33,7 @@ initialModel =
     -- ]
     , currentAirline = Nothing
     , searchText = ""
+    , errorLog = []
     }
 
 

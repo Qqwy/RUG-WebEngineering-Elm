@@ -3,7 +3,7 @@ module Update exposing (update)
 import Cmds
 import Models exposing (Model)
 import Msgs exposing (Msg(..))
-
+import Http
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -13,23 +13,47 @@ update msg model =
 
         SelectAirline airline ->
             ( model, Cmds.fetchAirlineDetails airline.abbreviation )
+
         FetchAirlines ->
             ( model, Cmds.fetchAirlines )
 
         AirlinesLoaded airlinesResult ->
             case airlinesResult of
-                Err _ ->
-                    -- TODO logging
-                    ( model, Cmd.none )
+                Err error ->
+                    ( logResponseError error model, Cmd.none )
 
                 Ok airlines ->
                     ( { model | airlines = airlines }, Cmd.none )
 
         AirlineDetailsLoaded airlineDetailsResult ->
             case airlineDetailsResult of
-                Err _ ->
-                    -- TODO logging
-                    ( model, Cmd.none )
+                Err error ->
+                    ( logResponseError error model, Cmd.none )
 
                 Ok airlineDetails ->
                     ( { model | currentAirline = Just airlineDetails }, Cmd.none )
+
+
+logResponseError httpError model =
+    let
+        oldErrorLog =
+            model.errorLog
+
+        errorString =
+            case httpError of
+                Http.BadUrl url ->
+                    "`" ++ url ++ "` was a bad URL and could not be found."
+
+                Http.Timeout ->
+                    "The connection timed out"
+
+                Http.NetworkError ->
+                    "The network connection was interrupted."
+
+                Http.BadStatus status ->
+                    "Bad status code returned by server, indicating failure: " ++ (String.fromInt status)
+
+                Http.BadBody info ->
+                    "Response could not be parsed: " ++ info
+    in
+    { model | errorLog = errorString :: oldErrorLog }
