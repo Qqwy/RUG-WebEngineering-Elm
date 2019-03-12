@@ -51,7 +51,6 @@ console.log('asset_path', asset_path); // 'local'
                     }
                     ]
                 }
-
             ]
         },
 
@@ -67,6 +66,9 @@ console.log('asset_path', asset_path); // 'local'
         new CopyWebpackPlugin([
           { from: 'src/assets/favicon.ico' }
         ]),
+          new CopyWebpackPlugin([
+              { from: 'src/fake_server', to: "fake_server" }
+          ]),
       ]
     },
     modeConfig(mode),
