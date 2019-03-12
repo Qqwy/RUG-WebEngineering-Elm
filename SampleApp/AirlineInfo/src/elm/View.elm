@@ -6,7 +6,7 @@ import Html.Events exposing (onClick, onInput)
 import Models exposing (Airline, AirlineDetails, Model)
 import Msgs exposing (Msg(..))
 
-
+{-| Convert the current Model to displayable HTML -}
 view : Model -> Html Msg
 view model =
     div [ class "airlines-app" ]
@@ -22,7 +22,7 @@ view model =
             ]
         ]
 
-
+{-| List of airlines with filter text box above. -}
 airlinesForm : Model -> Html Msg
 airlinesForm model =
     div [ class "airlines-form" ]
@@ -53,12 +53,12 @@ airlinesView airlines currentAirline =
 
 airlineView : Airline -> Html Msg
 airlineView airline =
-    div [ class "item", onClick (SelectAirline airline) ] [ text (airline.abbreviation ++ ": " ++ airline.name) ]
+    div [ class "item", onClick (SelectAirline airline) ] [ text (airline.name ++ " (" ++ airline.abbreviation ++ ")") ]
 
 
 currentAirlineView : Airline -> Html Msg
 currentAirlineView airline =
-    div [ class "current item" ] [ text (airline.abbreviation ++ ": " ++ airline.name) ]
+    div [ class "current item" ] [ text (airline.name ++ " (" ++ airline.abbreviation ++ ")") ]
 
 
 airlineDetailView maybeAirlineDetails =

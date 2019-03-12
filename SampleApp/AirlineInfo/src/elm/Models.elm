@@ -1,13 +1,20 @@
-module Models exposing (Airline, AirlineDetails, Model, initialModel, matchingAirlines, airlinesDecoder, airlineDetailsDecoder)
+module Models exposing (Airline, AirlineDetails, Model, airlineDetailsDecoder, airlinesDecoder, initialModel, matchingAirlines)
 
 import Json.Decode as JD
 
+
+{-| The basic info we know about an Airline.
+Returned by index endpoint; used in list.
+-}
 type alias Airline =
     { name : String
     , abbreviation : String
     }
 
 
+{-| The extra info we obtain from looking at the details
+endpoint of a given Airline.
+-}
 type alias AirlineDetails =
     { name : String
     , abbreviation : String
@@ -16,21 +23,18 @@ type alias AirlineDetails =
 
 
 type alias Model =
-    { airlines : List Airline
-    , currentAirline : Maybe AirlineDetails
-    , searchText : String
-    , errorLog : List String
+    { airlines : List Airline --| The airlines that can be selected
+    , searchText : String --| The text we filter the 'airlines' list by.
+    , currentAirline : Maybe AirlineDetails --| The current airline we ar looking at in detail
+    , errorLog : List String --| to display connection problems to the user.
     }
 
 
+{-| An empty Model to start the app with
+-}
 initialModel : Model
 initialModel =
     { airlines = []
-
-    -- [ { name = "My Jet Now Airlines", abbreviation = "MJN" }
-    -- , { name = "SuperFast Planes", abbreviation = "SFP" }
-    -- , { name = "Airlines Anonymous", abbreviation = "AA" }
-    -- ]
     , currentAirline = Nothing
     , searchText = ""
     , errorLog = []
@@ -41,12 +45,16 @@ airlinesDecoder =
     JD.list airlineDecoder
 
 
+{-| Decodes a single Airline object from JSON.
+-}
 airlineDecoder =
     JD.map2 Airline
         (JD.field "name" JD.string)
         (JD.field "abbr" JD.string)
 
 
+{-| Decodes a single AirlineDetails object from JSON.
+-}
 airlineDetailsDecoder =
     JD.map3 AirlineDetails
         (JD.field "name" JD.string)

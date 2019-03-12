@@ -3,7 +3,7 @@ module Msgs exposing (Msg(..))
 import Http
 import Models exposing (Airline, AirlineDetails)
 
-
+{-| Events that might happen in our app -}
 type Msg
     = SearchTextChange String
     | FetchAirlines
