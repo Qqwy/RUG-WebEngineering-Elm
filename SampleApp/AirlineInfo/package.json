@@ -13,14 +13,14 @@
   "scripts": {
     "webpack": "webpack",
     "webpack-dev-server": "webpack-dev-server",
-    "prod": "npm run webpack -- --env.mode production",
+    "prod": "npm run webpack -- --env.mode production --env.asset_path='./'",
     "prod:analyze": "npm run prod -- --env.presets analyze",
     "prod:compress": "npm run prod -- --env.presets compress",
     "dev": "webpack-dashboard --title 'Elm Dev Server' -- npm run webpack-dev-server -- --env.mode development",
     "elm-analyse": "elm-analyse -s -o",
     "preprod": "rimraf dist",
     "lint": "stylelint src/assets/styles",
-    "github-pages": "yarn run prod --env.asset_path='/elm-quantum-parchment/'; yarn run push-dir --dir=dist/ --branch=gh-pages;"
+    "github-pages": "yarn run prod --env.asset_path='/RUG-WebEngineering-Elm/'; yarn run push-dir --dir=dist/ --branch=gh-pages;"
   },
   "license": "MIT",
   "browserslist": [
@@ -29,7 +29,6 @@
   ],
   "devDependencies": {
     "autoprefixer": "^9.4.5",
-    "bootstrap": "^4.3.1",
     "compression-webpack-plugin": "^2.0.0",
     "copy-webpack-plugin": "^4.6.0",
     "css-loader": "^2.1.0",

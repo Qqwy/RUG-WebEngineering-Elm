@@ -1,4 +1,4 @@
-$import-google-fonts: true;
+$import-google-fonts: false;
 $icons-font-path: '/semantic-ui';
 $flags-image-path: '/semantic-ui';
 
@@ -13,9 +13,14 @@ $line-color: grey;
 
 .airlines-app {
     padding: 2em;
+    font-size: 16px;
+
+    * {
+        font-family: "Palatino Linotype", "Garamond", "Georgia", "Serif" !important;
+    }
 
     .airlines-list {
-        font-size: 1.2em;
+        font-family: 1.5em;
 
         .item {
             cursor: pointer;
