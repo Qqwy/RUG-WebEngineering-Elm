@@ -11,6 +11,10 @@ $flags-image-path: '/semantic-ui';
 $transition-speed: .1s;
 $line-color: grey;
 
+html, body {
+    background-color: white;
+}
+
 .airlines-app {
     padding: 2em;
     font-size: 16px;
