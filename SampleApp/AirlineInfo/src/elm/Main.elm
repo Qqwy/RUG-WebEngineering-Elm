@@ -3,6 +3,8 @@ module Main exposing (main)
 import Browser
 import Html exposing (..)
 import Models exposing (Model)
+import Msgs exposing (Msg)
+import Cmds
 import Update
 import View
 
@@ -20,9 +22,9 @@ main =
 
 {-| Initialize with a simple model. We don't need special configuration passed in.
 -}
-init : () -> ( Model, Cmd msg )
+init : () -> ( Model, Cmd Msg )
 init _ =
-    ( Models.initialModel, Cmd.none )
+    ( Models.initialModel, Cmds.fetchAirlines )
 
 
 {-| For this simple application, we need no subscriptions.

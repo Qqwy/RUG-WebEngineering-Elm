@@ -1,11 +1,13 @@
 module View exposing (view)
 
-import Html exposing (Html, div, h1, h2, i, input, li, text, ul)
+import Html exposing (Html, div, h1, h2, i, input, li, text, ul, dl, dt, dd)
 import Html.Attributes exposing (class, placeholder)
 import Html.Events exposing (onClick, onInput)
-import Models exposing (Airline, Model, Msg(..))
+import Models exposing (Airline, AirlineDetails, Model)
+import Msgs exposing (Msg(..))
 
 
+view : Model -> Html Msg
 view model =
     div [ class "airlines-app" ]
         [ div [ class "ui grid" ]
@@ -20,6 +22,7 @@ view model =
         ]
 
 
+airlinesForm : Model -> Html Msg
 airlinesForm model =
     div [ class "airlines-form" ]
         [ div [ class "airline-search ui fluid icon input" ]
@@ -33,11 +36,11 @@ airlinesForm model =
         ]
 
 
-airlinesView : List Airline -> Maybe Airline -> Html Msg
+airlinesView : List Airline -> Maybe AirlineDetails -> Html Msg
 airlinesView airlines currentAirline =
     let
         correctAirlineView airline =
-            if Just airline == currentAirline then
+            if Just airline.abbreviation == (currentAirline |> Maybe.map .abbreviation) then
                 currentAirlineView airline
 
             else
@@ -57,10 +60,10 @@ currentAirlineView airline =
     div [ class "current item" ] [ text (airline.abbreviation ++ ": " ++ airline.name) ]
 
 
-airlineDetailView maybeAirline =
+airlineDetailView maybeAirlineDetails =
     let
         content =
-            case maybeAirline of
+            case maybeAirlineDetails of
                 Nothing ->
                     [ div [ class "empty" ]
                         [ text "Select an airline first" ]
@@ -68,7 +71,12 @@ airlineDetailView maybeAirline =
 
                 Just airline ->
                     [ h1 [] [ text airline.name ]
-                    , h2 [] [ text ("Abbreviation: " ++ airline.abbreviation) ]
+                    , dl []
+                        [ dt [] [ text "abbreviation" ]
+                        , dd [] [ text airline.abbreviation ]
+                        , dt [] [ text "No. of flights" ]
+                        , dd [] [ text (String.fromInt airline.flights) ]
+                        ]
                     ]
     in
     div [ class "airline-detail" ] content

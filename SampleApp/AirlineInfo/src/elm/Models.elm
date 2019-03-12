@@ -1,5 +1,6 @@
-module Models exposing (Airline, Model, Msg(..), initialModel, matchingAirlines)
+module Models exposing (Airline, AirlineDetails, Model, initialModel, matchingAirlines, airlinesDecoder, airlineDetailsDecoder)
 
+import Json.Decode as JD
 
 type alias Airline =
     { name : String
@@ -7,28 +8,48 @@ type alias Airline =
     }
 
 
+type alias AirlineDetails =
+    { name : String
+    , abbreviation : String
+    , flights : Int
+    }
+
+
 type alias Model =
     { airlines : List Airline
-    , currentAirline : Maybe Airline
+    , currentAirline : Maybe AirlineDetails
     , searchText : String
     }
 
 
-type Msg
-    = SearchTextChange String
-    | SelectAirline Airline
-
-
 initialModel : Model
 initialModel =
-    { airlines =
-        [ { name = "My Jet Now Airlines", abbreviation = "MJN" }
-        , { name = "SuperFast Planes", abbreviation = "SFP" }
-        , { name = "Airlines Anonymous", abbreviation = "AA" }
-        ]
+    { airlines = []
+
+    -- [ { name = "My Jet Now Airlines", abbreviation = "MJN" }
+    -- , { name = "SuperFast Planes", abbreviation = "SFP" }
+    -- , { name = "Airlines Anonymous", abbreviation = "AA" }
+    -- ]
     , currentAirline = Nothing
     , searchText = ""
     }
+
+
+airlinesDecoder =
+    JD.list airlineDecoder
+
+
+airlineDecoder =
+    JD.map2 Airline
+        (JD.field "name" JD.string)
+        (JD.field "abbr" JD.string)
+
+
+airlineDetailsDecoder =
+    JD.map3 AirlineDetails
+        (JD.field "name" JD.string)
+        (JD.field "abbr" JD.string)
+        (JD.field "flights" JD.int)
 
 
 {-| All airlines containing the search box text in their name.
