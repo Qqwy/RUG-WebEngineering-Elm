@@ -26,7 +26,7 @@ type alias Model =
     { airlines : List Airline --| The airlines that can be selected
     , searchText : String --| The text we filter the 'airlines' list by.
     , currentAirline : Maybe AirlineDetails --| The current airline we ar looking at in detail
-    , errorLog : List String --| to display connection problems to the user.
+    , errorLog : Maybe String --| to display connection problems to the user.
     }
 
 
@@ -37,7 +37,7 @@ initialModel =
     { airlines = []
     , currentAirline = Nothing
     , searchText = ""
-    , errorLog = []
+    , errorLog = Nothing
     }
 
 

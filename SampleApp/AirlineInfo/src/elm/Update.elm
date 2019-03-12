@@ -37,9 +37,6 @@ update msg model =
 {-| Show errors to the user -}
 logResponseError httpError model =
     let
-        oldErrorLog =
-            model.errorLog
-
         errorString =
             case httpError of
                 Http.BadUrl url ->
@@ -57,4 +54,4 @@ logResponseError httpError model =
                 Http.BadBody info ->
                     "Response could not be parsed: " ++ info
     in
-    { model | errorLog = errorString :: oldErrorLog }
+    { model | errorLog = Just errorString }

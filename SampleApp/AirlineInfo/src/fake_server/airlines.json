@@ -2,6 +2,6 @@
     {"name": "My Jet Now", "abbr": "MJN"},
     {"name": "Airlines Anonymous", "abbr": "AA"},
     {"name": "SuperFast Planes", "abbr": "SFP"},
-    {"name": "Broken; does not have details view", "abbr": "XXX"},
+    {"name": "Airline with missing endpoint", "abbr": "XXX"},
     {"name": "Airline with Malformed JSON", "abbr": "YYY"}
 ]

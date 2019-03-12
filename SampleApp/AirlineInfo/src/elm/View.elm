@@ -82,16 +82,12 @@ airlineDetailView maybeAirlineDetails =
     in
     div [ class "airline-detail" ] content
 
-errorLogView errors =
-    if List.isEmpty errors then
-        text ""
-    else
-        let
-            errorsHtml =
-                errors
-                    |> List.map (\error -> li [] [text error])
-        in
-          div [class "ui error message"]
-              [ div [class "header"] [text "Errors encountered while communicating with the server"]
-              , ul [class "list"] errorsHtml
-              ]
+errorLogView error =
+    case error of
+        Nothing ->
+            text ""
+        Just errorText ->
+            div [class "ui error message"]
+                [ div [class "header"] [text "Error encountered while communicating with the server:"]
+                , div [class "description"] [text errorText]
+                ]
