@@ -20,7 +20,7 @@
     "elm-analyse": "elm-analyse -s -o",
     "preprod": "rimraf dist",
     "lint": "stylelint src/assets/styles",
-    "github-pages": "yarn run prod --env.asset_path='/RUG-WebEngineering-Elm/'; yarn run push-dir --dir=dist/ --branch=gh-pages;"
+    "github-pages": "yarn run webpack --env.mode production --env.asset_path='/RUG-WebEngineering-Elm/'; yarn run push-dir --dir=dist/ --branch=gh-pages;"
   },
   "license": "MIT",
   "browserslist": [
