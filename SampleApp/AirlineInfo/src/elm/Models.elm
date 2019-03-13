@@ -67,12 +67,9 @@ Case-Insensitive
 -}
 matchingAirlines airlines query =
     let
-        normalizedQuery =
-            String.toUpper query
-
         containsQuery : String -> Bool
         containsQuery str =
-            String.contains normalizedQuery (String.toUpper str)
+            String.contains (String.toUpper query) (String.toUpper str)
     in
     airlines
         |> List.filter

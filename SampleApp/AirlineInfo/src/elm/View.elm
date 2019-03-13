@@ -11,7 +11,7 @@ view : Model -> Html Msg
 view model =
     div [ class "airlines-app" ]
         [ div [ class "ui grid" ]
-            [ div [ class "fifteen wide column" ]
+            [ div [ class "row" ]
                 [ h1 [ class "ui center aligned header" ] [ text "Fancy Airline Selection App" ]
                 ]
             , div [class "row"] [errorLogView model.errorLog]
