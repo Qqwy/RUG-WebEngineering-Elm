@@ -1,0 +1,7 @@
+[
+    {"name": "My Jet Now", "abbr": "MJN"},
+    {"name": "Airlines Anonymous", "abbr": "AA"},
+    {"name": "SuperFast Planes", "abbr": "SFP"},
+    {"name": "Airline with missing endpoint", "abbr": "XXX"},
+    {"name": "Airline with Malformed JSON", "abbr": "YYY"}
+]

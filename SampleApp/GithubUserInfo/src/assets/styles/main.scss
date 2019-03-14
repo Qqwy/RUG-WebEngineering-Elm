@@ -1,0 +1,49 @@
+$import-google-fonts: false;
+$icons-font-path: '/semantic-ui';
+$flags-image-path: '/semantic-ui';
+
+@import '~semantic-ui-sass/scss/globals/all';
+@import '~semantic-ui-sass/scss/elements/all';
+@import '~semantic-ui-sass/scss/collections/all';
+@import '~semantic-ui-sass/scss/views/all';
+@import '~semantic-ui-sass/scss/modules/all';
+
+$transition-speed: .1s;
+$line-color: grey;
+
+html, body {
+    background-color: white;
+}
+
+.airlines-app {
+    padding: 2em;
+    font-size: 16px;
+
+    * {
+        font-family: "Palatino Linotype", "Garamond", "Georgia", "Serif" !important;
+    }
+
+    .airlines-list {
+        font-family: 1.5em;
+
+        .item {
+            cursor: pointer;
+
+            transition: color $transition-speed;
+            &.current, &:hover {
+                color: #00aaff;
+            }
+        }
+    }
+
+    .airline-detail {
+        border-left: 1px solid $line-color;
+        min-height: 100%;
+        padding: 2em;
+
+        .empty {
+            color: rgba(0,0,0,0.5);
+            font-style: italic;
+        }
+    }
+}
