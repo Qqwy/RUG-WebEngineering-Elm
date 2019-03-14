@@ -1,11 +1,11 @@
 module Models exposing (Model, UserInfo, exampleUser, initialModel, userInfoDecoder)
 
 import Json.Decode as JD
-
+import RemoteData exposing (WebData)
 
 type alias Model =
     { searchText : String
-    , userInfo : Maybe UserInfo
+    , userInfo : WebData UserInfo
     , errorLog : Maybe String
     }
 
@@ -20,8 +20,7 @@ type alias UserInfo =
 initialModel : Model
 initialModel =
     { searchText = ""
-    , userInfo = Just exampleUser
-    , errorLog = Nothing
+    , userInfo = RemoteData.NotAsked
     }
 
 
