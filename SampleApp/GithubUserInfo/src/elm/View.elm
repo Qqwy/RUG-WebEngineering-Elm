@@ -14,7 +14,7 @@ import RemoteData exposing (RemoteData(..))
 view : Model -> Html Msg
 view model =
     div [ class "ui container github-user-info-app " ]
-        [ h1 [class "ui centered header"] [text "Elm Github User Info App"]
+        [ h1 [ class "ui centered header" ] [ text "Elm Github User Info App" ]
         , div [ class "ui segments" ]
             [ viewUserDetails model.userInfo
             , viewForm model
@@ -24,10 +24,10 @@ view model =
 
 viewForm model =
     div [ class "ui segment" ]
-        [ form [onSubmit FetchUser, class "ui huge fluid action input"]
-              [ input [ onInput SearchTextChange, placeholder "Enter a GitHub username" ] []
-              , button [class "ui huge right labeled icon button"] [i [class "search icon"] [],  text "Find" ]
-              ]
+        [ form [ onSubmit FetchUser, class "ui huge fluid action input" ]
+            [ input [ onInput SearchTextChange, placeholder "Enter a GitHub username" ] []
+            , button [ class "ui huge right labeled icon button" ] [ i [ class "search icon" ] [], text "Find" ]
+            ]
         ]
 
 
@@ -39,13 +39,15 @@ viewUserDetails userInfoWebData =
                 ]
 
         Loading ->
-            div [ class "ui loading segment" ] [ em [] [ text "Loading..." ] ]
+            div [ class "ui loading segment" ]
+                [ em [] [ text "Loading..." ]
+                ]
 
         Failure failure ->
             let
                 failureText =
                     case failure of
-                        BadStatus _ ->
+                        BadStatus 404 ->
                             "User does not exist"
 
                         Timeout ->
@@ -66,7 +68,7 @@ viewUserDetails userInfoWebData =
                         , a [ class "meta", href userInfo.profileUrl ] [ text userInfo.profileUrl ]
                         ]
                     , div [ class "extra content" ]
-                        [ span [] [ i [ class "archive icon" ] [],  text (String.fromInt userInfo.publicRepos ++ " Public Repos")  ]
+                        [ span [] [ i [ class "archive icon" ] [], text (String.fromInt userInfo.publicRepos ++ " Public Repos") ]
                         ]
                     ]
                 ]

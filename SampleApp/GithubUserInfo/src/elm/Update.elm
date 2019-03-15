@@ -1,10 +1,10 @@
 module Update exposing (update)
 
 import Http
-import RemoteData exposing (WebData)
+import Json.Decode
 import Models exposing (Model)
 import Msgs exposing (Msg(..))
-import Json.Decode
+import RemoteData exposing (WebData)
 
 
 {-| Run each time an event occurs
@@ -16,19 +16,23 @@ update msg model =
             ( { model | searchText = newSearchText }, Cmd.none )
 
         FetchUser ->
-            ( model, fetchUserFromGithubAPI model.searchText )
+            ( {model | userInfo = RemoteData.Loading}, fetchUserFromGithubAPI model.searchText )
 
         UserInfoLoaded userInfo ->
-            ({model | userInfo = userInfo}, Cmd.none)
+            ( { model | userInfo = userInfo }, Cmd.none )
 
 
 fetchUserFromGithubAPI username =
-    performGithubAPIRequest ("users/" ++ username) UserInfoLoaded Models.userInfoDecoder
+    performGithubAPIRequest ("users/" ++ username) Models.userInfoDecoder UserInfoLoaded
 
-performGithubAPIRequest : String -> (WebData a -> Msg) -> Json.Decode.Decoder a -> Cmd Msg
-performGithubAPIRequest endpoint msgOnResponse decoder =
+
+performGithubAPIRequest : String -> Json.Decode.Decoder a -> (WebData a -> Msg) -> Cmd Msg
+performGithubAPIRequest endpoint decoder msgOnResponse =
     let
         apiUrl =
             "https://api.github.com/"
     in
-    Http.get { url = apiUrl ++ endpoint, expect = Http.expectJson (\response -> response |> RemoteData.fromResult |> msgOnResponse) decoder }
+    Http.get
+        { url = apiUrl ++ endpoint
+        , expect = Http.expectJson (\response -> response |> RemoteData.fromResult |> msgOnResponse) decoder
+        }
