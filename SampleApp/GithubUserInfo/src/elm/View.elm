@@ -35,7 +35,7 @@ viewUserDetails userInfoWebData =
     case userInfoWebData of
         NotAsked ->
             div [ class "ui segment" ]
-                [ em [] [ text "Search a user first" ]
+                [ em [] [ text "Search for a user" ]
                 ]
 
         Loading ->
