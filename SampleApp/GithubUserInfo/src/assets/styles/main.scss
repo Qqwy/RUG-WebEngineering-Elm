@@ -1,6 +1,6 @@
 $import-google-fonts: false;
-$icons-font-path: '/semantic-ui';
-$flags-image-path: '/semantic-ui';
+$icons-font-path: './semantic-ui';
+$flags-image-path: './semantic-ui';
 
 @import '~semantic-ui-sass/scss/globals/all';
 @import '~semantic-ui-sass/scss/elements/all';
