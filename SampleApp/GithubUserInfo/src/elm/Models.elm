@@ -13,6 +13,7 @@ type alias UserInfo =
     { name : String
     , avatarUrl : String
     , profileUrl : String
+    , publicRepos : Int
     }
 
 
@@ -31,7 +32,8 @@ exampleUser =
 
 
 userInfoDecoder =
-    JD.map3 UserInfo
+    JD.map4 UserInfo
         (JD.field "login" JD.string)
         (JD.field "avatar_url" JD.string)
-        (JD.field "url" JD.string)
+        (JD.field "html_url" JD.string)
+        (JD.field "public_repos" JD.int)

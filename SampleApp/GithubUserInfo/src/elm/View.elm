@@ -2,7 +2,7 @@ module View exposing (view)
 
 import Html exposing (..)
 import Html.Attributes exposing (class, href, placeholder, src)
-import Html.Events exposing (onClick, onInput)
+import Html.Events exposing (onClick, onInput, onSubmit)
 import Http exposing (Error(..))
 import Models exposing (..)
 import Msgs exposing (Msg(..))
@@ -14,43 +14,59 @@ import RemoteData exposing (RemoteData(..))
 view : Model -> Html Msg
 view model =
     div [ class "ui container github-user-info-app " ]
-        [ div [class "ui segments"] [ viewUserDetails model.userInfo
-          , viewForm model
-          ]
+        [ h1 [class "ui centered header"] [text "Elm Github User Info App"]
+        , div [ class "ui segments" ]
+            [ viewUserDetails model.userInfo
+            , viewForm model
+            ]
         ]
 
 
 viewForm model =
     div [ class "ui segment" ]
-        [ input [ onInput SearchTextChange, placeholder "Enter a GitHub username" ] []
-        , button [ onClick FetchUser ] [ text "Find" ]
+        [ form [onSubmit FetchUser, class "ui huge fluid action input"]
+              [ input [ onInput SearchTextChange, placeholder "Enter a GitHub username" ] []
+              , button [class "ui huge right labeled icon button"] [i [class "search icon"] [],  text "Find" ]
+              ]
         ]
 
 
 viewUserDetails userInfoWebData =
-    let
-        content =
-            case userInfoWebData of
-                NotAsked ->
-                    [ em [] [ text "Search a user first" ]
+    case userInfoWebData of
+        NotAsked ->
+            div [ class "ui segment" ]
+                [ em [] [ text "Search a user first" ]
+                ]
+
+        Loading ->
+            div [ class "ui loading segment" ] [ em [] [ text "Loading..." ] ]
+
+        Failure failure ->
+            let
+                failureText =
+                    case failure of
+                        BadStatus _ ->
+                            "User does not exist"
+
+                        Timeout ->
+                            "Your internet connection timed out."
+
+                        _ ->
+                            "Problem loading user"
+            in
+            div [ class "ui segment" ] [ div [ class "ui error message" ] [ text failureText ] ]
+
+        Success userInfo ->
+            div [ class "ui segment" ]
+                [ div
+                    [ class "ui centered card" ]
+                    [ div [ class "image" ] [ img [ src userInfo.avatarUrl ] [] ]
+                    , div [ class "content" ]
+                        [ a [ class "header", href userInfo.profileUrl ] [ text userInfo.name ]
+                        , a [ class "meta", href userInfo.profileUrl ] [ text userInfo.profileUrl ]
+                        ]
+                    , div [ class "extra content" ]
+                        [ span [] [ i [ class "archive icon" ] [],  text (String.fromInt userInfo.publicRepos ++ " Public Repos")  ]
+                        ]
                     ]
-
-                Loading ->
-                    [ em [] [ text "Loading..." ] ]
-
-                Failure (BadStatus _) ->
-                    [ strong [] [ text "User does not exist" ] ]
-
-                Failure Timeout ->
-                    [ strong [] [ text "Your internet connection timed out" ] ]
-
-                Failure _ ->
-                    [ text "Problem loading user" ]
-
-                Success userInfo ->
-                    [ h1 [] [ text userInfo.name ]
-                    , img [ src userInfo.avatarUrl ] []
-                    , a [ href userInfo.profileUrl ] [ text userInfo.profileUrl ]
-                    ]
-    in
-    div [ class "ui segment" ] content
+                ]

@@ -67,7 +67,7 @@ console.log('asset_path', asset_path); // 'local'
           { from: 'src/assets/favicon.ico' }
         ]),
           new CopyWebpackPlugin([
-              { from: 'src/fake_server', to: "fake_server" }
+              { from: 'src/assets/semantic-ui', to: "semantic-ui" }
           ]),
       ]
     },

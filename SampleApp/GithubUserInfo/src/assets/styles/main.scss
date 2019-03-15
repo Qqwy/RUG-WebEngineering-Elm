@@ -15,35 +15,10 @@ html, body {
     background-color: white;
 }
 
-.airlines-app {
-    padding: 2em;
-    font-size: 16px;
-
-    * {
-        font-family: "Palatino Linotype", "Garamond", "Georgia", "Serif" !important;
-    }
-
-    .airlines-list {
-        font-family: 1.5em;
-
-        .item {
-            cursor: pointer;
-
-            transition: color $transition-speed;
-            &.current, &:hover {
-                color: #00aaff;
-            }
-        }
-    }
-
-    .airline-detail {
-        border-left: 1px solid $line-color;
-        min-height: 100%;
-        padding: 2em;
-
-        .empty {
-            color: rgba(0,0,0,0.5);
-            font-style: italic;
+.github-user-info-app {
+    .ui.segments {
+        .ui.segment {
+            text-align: center;
         }
     }
 }
