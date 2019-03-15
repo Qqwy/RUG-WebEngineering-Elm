@@ -6,7 +6,6 @@ import RemoteData exposing (WebData)
 type alias Model =
     { searchText : String
     , userInfo : WebData UserInfo
-    , errorLog : Maybe String
     }
 
 
