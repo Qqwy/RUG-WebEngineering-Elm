@@ -53,6 +53,8 @@ viewUserDetails userInfoWebData =
                         Timeout ->
                             "Your internet connection timed out."
 
+                        NetworkError ->
+                            "You are not connected to the internet."
                         _ ->
                             "Problem loading user"
             in
