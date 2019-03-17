@@ -3,9 +3,10 @@ module Models exposing (Model, UserInfo, exampleUser, initialModel, userInfoDeco
 import Json.Decode as JD
 import RemoteData exposing (WebData)
 
+
 type alias Model =
     { searchText : String
-    , userInfo : WebData UserInfo
+    , userInfo : WebData UserInfo -- NotAsked / Loading / Failure / Success
     }
 
 
@@ -21,13 +22,6 @@ initialModel : Model
 initialModel =
     { searchText = ""
     , userInfo = RemoteData.NotAsked
-    }
-
-
-exampleUser =
-    { name = "Qqwy"
-    , avatarUrl = "TODO"
-    , profileUrl = "TODO"
     }
 
 
