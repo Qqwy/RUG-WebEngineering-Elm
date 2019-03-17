@@ -1,4 +1,4 @@
-module Models exposing (Model, UserInfo, exampleUser, initialModel, userInfoDecoder)
+module Models exposing (Model, UserInfo, initialModel, userInfoDecoder)
 
 import Json.Decode as JD
 import RemoteData exposing (WebData)
